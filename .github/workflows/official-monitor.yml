@@ -32,3 +32,13 @@ jobs:
           SEND_ALERTS: '0'
           ALERT_EMAIL: danmeng030106@gmail.com
         run: python official_monitor.py
+    
+      - name: Upload diagnostic screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sagrada-debug
+          path: debug/
+          if-no-files-found: ignore
+          retention-days: 1
+
