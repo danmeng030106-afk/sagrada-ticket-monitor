@@ -28,6 +28,6 @@ jobs:
         env:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
-          ALERT_EMAIL: danmeng030106@gmail.com
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
           TEST_EMAIL: ${{ inputs.test_email && '1' || '0' }}
         run: python monitor.py
