@@ -26,12 +26,18 @@ jobs:
           python -m pip install playwright==1.60.0
           python -m playwright install --with-deps chromium
 
+      - name: Install virtual display
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
       - name: Check official ticket availability
         env:
-          HEADLESS: '1'
+          HEADLESS: '0'
           SEND_ALERTS: '0'
           ALERT_EMAIL: danmeng030106@gmail.com
-        run: python official_monitor.py
+        run: xvfb-run -a python official_monitor.py
+
     
       - name: Upload diagnostic screenshots
         if: always()
