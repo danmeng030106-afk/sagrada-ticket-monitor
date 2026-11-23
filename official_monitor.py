@@ -65,6 +65,38 @@ def check_product(browser, name, slug):
         try:
             print(f"Checking {name} {date}", flush=True)
 
+            # Diagnose website loading failures.
+            def on_page_error(error):
+                print(
+                    "JS ERROR:",
+                    str(error)[:300],
+                    flush=True
+                )
+
+            def on_request_failed(request):
+                print(
+                    "REQUEST FAILED:",
+                    request.url.split("?")[0],
+                    request.failure,
+                    flush=True
+                )
+
+            def on_response(response):
+                if (
+                    "services.clorian.com" in response.url
+                    and response.status >= 400
+                ):
+                    print(
+                        "API ERROR:",
+                        response.status,
+                        response.url.split("?")[0],
+                        flush=True
+                    )
+
+            page.on("pageerror", on_page_error)
+            page.on("requestfailed", on_request_failed)
+            page.on("response", on_response)
+
             page.goto(
                 url,
                 wait_until="domcontentloaded",
