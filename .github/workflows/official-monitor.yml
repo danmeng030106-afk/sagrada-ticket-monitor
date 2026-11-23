@@ -40,7 +40,7 @@ jobs:
         env:
           HEADLESS: '0'
           SEND_ALERTS: '1'
-          ALERT_EMAIL: danmeng030106@gmail.com
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
         run: xvfb-run -a python official_monitor.py
