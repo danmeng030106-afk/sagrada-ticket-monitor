@@ -35,7 +35,7 @@ def extract_general_sale(data):
 def send_email(subject, body):
     sender = os.environ['SMTP_USER']
     password = os.environ['SMTP_APP_PASSWORD']
-    recipient = os.environ.get('ALERT_EMAIL', 'danmeng030106@gmail.com')
+    recipient = os.environ['ALERT_EMAIL']
     msg = EmailMessage()
     msg['From'], msg['To'], msg['Subject'] = sender, recipient, subject
     msg.set_content(body)
