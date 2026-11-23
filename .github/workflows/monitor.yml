@@ -1,0 +1,31 @@
+name: Sagrada date-level monitor
+on:
+  workflow_dispatch:
+    inputs:
+      test_email:
+        description: 'Send test email only'
+        type: boolean
+        default: false
+  schedule:
+    - cron: '3,13,23,33,43,53 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: sagrada-monitor
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check availability and email
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
+          ALERT_EMAIL: danmeng030106@gmail.com
+          TEST_EMAIL: ${{ inputs.test_email && '1' || '0' }}
+        run: python monitor.py
