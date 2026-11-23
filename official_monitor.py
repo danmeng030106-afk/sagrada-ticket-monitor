@@ -17,7 +17,7 @@ PRODUCTS = {
 }
 
 DATES = ["2026-12-26", "2026-12-27", "2026-12-28"]
-EMAIL = os.getenv("ALERT_EMAIL", "danmeng030106@gmail.com")
+EMAIL = os.environ["ALERT_EMAIL"]
 
 
 def send_email(findings):
