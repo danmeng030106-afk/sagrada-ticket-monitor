@@ -1,0 +1,19 @@
+name: Schedule trigger test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Confirm scheduled execution
+        run: |
+          echo "Event: $GITHUB_EVENT_NAME"
+          date -u
+          echo "Scheduled trigger test completed"
