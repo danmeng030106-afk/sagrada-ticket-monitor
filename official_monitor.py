@@ -16,7 +16,7 @@ PRODUCTS = {
         "4779-sagrada-familia-with-guide-and-visit-to-the-towers",
 }
 
-DATES = ["2026-12-27", "2026-12-28"]
+DATES = ["2026-12-17"]
 EMAIL = os.getenv("ALERT_EMAIL", "danmeng030106@gmail.com")
 
 
