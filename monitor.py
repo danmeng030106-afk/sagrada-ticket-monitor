@@ -1,4 +1,3 @@
-"""Conservative date-level alert; does NOT verify four tickets."""
 import json
 import os
 import smtplib
