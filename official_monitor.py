@@ -146,8 +146,36 @@ def check_product(browser, name, slug):
             print(
                 "CHECK FAILED:",
                 type(error).__name__,
-                str(error)[:200]
+                str(error)[:200],
+                flush=True
             )
+
+            # Save diagnostic information without credentials
+            if not results:
+                try:
+                    from pathlib import Path
+                    Path("debug").mkdir(exist_ok=True)
+
+                    filename = (
+                        f"debug/{slug.split('-')[0]}-"
+                        f"{date}.png"
+                    )
+
+                    page.screenshot(
+                        path=filename,
+                        full_page=True,
+                        timeout=10000
+                    )
+
+                    print("Screenshot saved:", filename)
+                    print("Page URL:", page.url)
+                    print("Page title:", page.title())
+
+                except Exception as screenshot_error:
+                    print(
+                        "Screenshot failed:",
+                        str(screenshot_error)[:150]
+                    )
 
         finally:
             page.close()
