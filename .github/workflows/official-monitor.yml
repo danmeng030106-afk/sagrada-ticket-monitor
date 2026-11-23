@@ -3,9 +3,15 @@ name: Sagrada official monitor
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '2-59/5 * * * *'
 
 permissions:
   contents: read
+
+concurrency:
+  group: sagrada-official-monitor
+  cancel-in-progress: false
 
 jobs:
   check:
@@ -34,11 +40,12 @@ jobs:
       - name: Check official ticket availability
         env:
           HEADLESS: '0'
-          SEND_ALERTS: '0'
+          SEND_ALERTS: '1'
           ALERT_EMAIL: danmeng030106@gmail.com
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
         run: xvfb-run -a python official_monitor.py
 
-    
       - name: Upload diagnostic screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -47,4 +54,3 @@ jobs:
           path: debug/
           if-no-files-found: ignore
           retention-days: 1
-
